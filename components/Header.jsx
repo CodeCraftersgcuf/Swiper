@@ -7,7 +7,6 @@ import { FaSearch } from "react-icons/fa";
 import { SlBag } from "react-icons/sl";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Link from "next/link";
-import CartModal from "./CartModal";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Cart from "./Cart";
@@ -64,7 +63,6 @@ const Header = () => {
           </div>
         </div>
       </header>
-      {/* <Cart /> */}
     </>
   );
 };
