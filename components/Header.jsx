@@ -64,7 +64,7 @@ const Header = () => {
           </div>
         </div>
       </header>
-      <Cart />
+      {/* <Cart /> */}
     </>
   );
 };

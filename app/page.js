@@ -10,6 +10,7 @@ import 'swiper/css/grid';
 import 'swiper/css/pagination';
 import { FreeMode, Grid, Navigation, Pagination } from 'swiper/modules';
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
+import Cart from '@/components/Cart';
 
 const slides = Array.from({ length: 40 }, (_, index) => index + 1);
 
@@ -62,6 +63,7 @@ const HomePage = () => {
   //https://cdn.shopify.com/videos/c/o/v/331b4aa9d8cb4d3b984bd160fa65030b.mp4
   return (
     <main className="home">
+      <Cart></Cart>
       <div className="topPage">
         <aside className="video-background">
           <video className="video-overlay" autoPlay muted loop>

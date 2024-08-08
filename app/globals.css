@@ -162,6 +162,23 @@ body {
   }
 }
 
+/* .mySwiper5 {
+  width: 90%;
+  margin: 60px auto;
+  height: fit-content;
+  overflow: scroll;
+  display: flex;
+  cursor: grab;
+
+  .swiper-slide {
+    color: #f3f3f3;
+    height: calc(100% / 3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+} */
+
 .swiper-slide {
   color: #f3f3f3;
   height: calc(100% / 3);
@@ -407,6 +424,18 @@ body {
     z-index: 100;
     transition: width 0.5s;
   } */
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, and Opera */
 }
 
 @media screen and (max-width: 1100px) {

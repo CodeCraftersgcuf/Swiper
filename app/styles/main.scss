@@ -126,8 +126,9 @@ h1{
             &:first-of-type{
                 border: 1px solid rgb(114, 114, 114);
                 border-radius: 15px;
-                width: 217px;
+                // width: 217px;
                 // width: 135px;
+                width: fit-content;
                 margin-top: 10px;
                 padding: 3px;
                 display: flex;
@@ -139,7 +140,9 @@ h1{
                 font-size: 10px;
                 border-radius: 15px;
                 padding: 3px 12px;
-                
+                &:hover{
+                    cursor: pointer;
+                }
             }
         }
         .slider-items{
@@ -193,7 +196,7 @@ h1{
                 .item-sizes-box{
                     position: absolute;
                     opacity: 0;
-                    width: 90%;
+                    width: 87%;
                     background-color: black;
                     border: 1px solid rgb(61, 61, 61);
                     border-radius: 8px;
@@ -372,6 +375,9 @@ h1{
 .slider-buttons{
     margin: 10px 0 0 5%;
 } 
+.txt-black {
+    color: black !important
+}
 .preFooter{
     width: 90%;
     margin: auto;
