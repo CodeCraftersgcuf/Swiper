@@ -21,7 +21,7 @@ import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 const slides2 = [1, 2, 3, 4, 5, 6, 7, 8]
 const cartPricingOverflow = [1, 2, 3, 4, 5]
 
-const Cart = () => {
+const Cart = ({ isOpen }) => {
     const [women, setWomen] = useState(true);
     const dispatch = useDispatch()
     const closeDiv = (e) => {
@@ -45,7 +45,11 @@ const Cart = () => {
     };
 
     return (
-        <div
+        <motion.div
+            initial={{ y: "20%", opacity: 0 }}  // Start from below the screen
+            animate={{ y: isOpen ? "0%" : "20%", opacity: isOpen ? 1 : 0 }} // Slide up when open, slide down when closing
+            exit={{ y: "20%", opacity: 0 }} // Exit with slide down and fade out
+            transition={{ duration: 0.5 }} // Animation duration
             id="modal-background"
             className="fixed inset-0 bg-black bg-opacity-50 flex items-end justify-center z-50"
             onClick={closeDiv}
@@ -232,7 +236,7 @@ const Cart = () => {
 
 
             </div>
-        </div>
+        </motion.div>
     )
 }
 

@@ -38,13 +38,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head />
       <body className={inter.className}>
-        <ReduxProviderWrapper>
-          <Header />
-          <div id="smooth-wrapper">
-            <div id="smooth-content">{children}</div>
-          </div>
-          <Footer />
-        </ReduxProviderWrapper>
+        <ReduxProviderWrapper>{children}</ReduxProviderWrapper>
       </body>
     </html>
   );

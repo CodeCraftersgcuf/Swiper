@@ -19,9 +19,10 @@ import mastercardico from '../../assets/mastercard.svg';
 import masterredcardico from '../../assets/redmaster.svg';
 import bluecard from '../../assets/bluecard.svg';
 import cartimg from '../../assets/cart-img.jpg';
+import NoHeaderWrapper from '@/components/NoHeaderWrapper';
 const payment = () => {
   return (
-    <>
+    <NoHeaderWrapper>
       <div className="">
         <div className="flex xl:flex-nowrap flex-wrap justify-start ms-9 me-9 lg:ms-24">
           <div className="payment-main flex flex-wrap justify-start lg:justify-end ">
@@ -609,7 +610,7 @@ const payment = () => {
           </div>
         </div>
       </div>
-    </>
+    </NoHeaderWrapper>
   );
 };
 

@@ -2,13 +2,16 @@
 import React, { useRef, useState } from 'react';
 import AbsolutePart from '@/components/details/AbsolutePart';
 import DetailsSwiper from '@/components/details/DetailsSwiper';
+import WithHeaderWrapper from '@/components/WithHeaderWrapper';
 
 export default function DetailsPage() {
 
     return (
-        <div className='h-[87vh] w-screen relative'>
-            <DetailsSwiper />
-            <AbsolutePart />
-        </div>
+        <WithHeaderWrapper>
+            <div className='h-[87vh] w-screen relative'>
+                <DetailsSwiper />
+                <AbsolutePart />
+            </div>
+        </WithHeaderWrapper>
     );
 }
