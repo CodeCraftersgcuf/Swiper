@@ -8,7 +8,7 @@ const smallImages = [1, 2, 3, 4, 5]
 
 const AbsolutePart = () => {
     return (
-        <div className='absolute bg-white p-4 top-[9%] right-[4.5rem] z-50 w-[24rem] h-[33rem] border border-gray-400 rounded-lg overflow-scroll scrollbar-hide'>
+        <div className='absolute bg-white p-4 top-[5%] right-[4.5rem] z-50 w-[24rem] h-[33rem] border border-gray-400 rounded-lg overflow-scroll scrollbar-hide'>
             <div className='flex flex-col gap-3 w-full text-black justify-between'>
                 <div className='flex flex-col gap-1 border-b pb-3 border-gray-400'>
                     <div className='flex items-center justify-center h-10'>
