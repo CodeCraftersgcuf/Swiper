@@ -11,6 +11,7 @@ import 'swiper/css/pagination';
 import { FreeMode, Grid, Navigation, Pagination } from 'swiper/modules';
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 import Cart from '@/components/Cart';
+import { useSelector } from 'react-redux';
 
 const slides = Array.from({ length: 40 }, (_, index) => index + 1);
 
@@ -18,6 +19,7 @@ const slides2 = Array.from({ length: 8 }, (_, index) => index + 1);
 
 const HomePage = () => {
   const [women, setWomen] = useState(true);
+  const isOpen = useSelector((state) => state.modalFn);
   const [men, setMen] = useState(false);
   const swiperRef = useRef();
   const swiperRef2 = useRef();
@@ -45,6 +47,11 @@ const HomePage = () => {
   const handleMouseLeave = () => {
     setHoveredIndex(null);
   };
+
+  // State to manage the visibility of the div
+
+  // Function to close the div when clicking the background
+
   // const container = useRef();
 
   // useGSAP(
@@ -61,9 +68,10 @@ const HomePage = () => {
   //   }
   // );
   //https://cdn.shopify.com/videos/c/o/v/331b4aa9d8cb4d3b984bd160fa65030b.mp4
+  console.log(isOpen);
   return (
     <main className="home">
-      <Cart></Cart>
+      {isOpen && <Cart />}
       <div className="topPage">
         <aside className="video-background">
           <video className="video-overlay" autoPlay muted loop>

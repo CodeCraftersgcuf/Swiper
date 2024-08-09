@@ -8,7 +8,7 @@ import { Inter } from 'next/font/google';
 // import { useGSAP } from '@gsap/react';
 
 import Header from '@/components/Header';
-
+import ReduxProviderWrapper from '@/components/ReduxProviderWrapper';
 import './globals.css';
 import Footer from '@/components/Footer';
 
@@ -38,11 +38,13 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head />
       <body className={inter.className}>
-        <Header />
-        <div id="smooth-wrapper">
-          <div id="smooth-content">{children}</div>
-        </div>
-        <Footer />
+        <ReduxProviderWrapper>
+          <Header />
+          <div id="smooth-wrapper">
+            <div id="smooth-content">{children}</div>
+          </div>
+          <Footer />
+        </ReduxProviderWrapper>
       </body>
     </html>
   );

@@ -9,11 +9,14 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import Cart from "./Cart";
+import { useSelector } from "react-redux";
+import { modalActions } from "@/store/openModel";
+import { useDispatch } from "react-redux";
 
 
 const Header = () => {
-  const cartModal = useRef()
+  const dispatch = useDispatch()
+  const items = useSelector((state) => state.itemsFn)
   const router = useRouter()
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -33,6 +36,9 @@ const Header = () => {
     }
   };
 
+  const showCartModal = () => {
+    dispatch(modalActions.openModal())
+  }
   return (
     <>
       <header>
@@ -57,7 +63,7 @@ const Header = () => {
           </div>
           <div>
             <FaSearch />
-            <SlBag className="cart" />
+            <SlBag onClick={showCartModal} className="cart" />
             <p className="p">1</p>
             <RxHamburgerMenu color="white" className="burger" />
           </div>
