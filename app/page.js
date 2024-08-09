@@ -2,8 +2,9 @@
 // import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 // import { useGSAP } from '@gsap/react';
 import './styles/main.scss';
+
 import { FaPlus } from 'react-icons/fa6';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/grid';
@@ -11,7 +12,10 @@ import 'swiper/css/pagination';
 import { FreeMode, Grid, Navigation, Pagination } from 'swiper/modules';
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 import Cart from '@/components/Cart';
+import SignInModal from '@/components/SignInModal';
+import AgeVerificationModal from '@/components/AgeVerificationModal';
 import { useSelector } from 'react-redux';
+import { CURRENT_STATES } from '@/store/currentState';
 
 const slides = Array.from({ length: 40 }, (_, index) => index + 1);
 
@@ -19,7 +23,9 @@ const slides2 = Array.from({ length: 8 }, (_, index) => index + 1);
 
 const HomePage = () => {
   const [women, setWomen] = useState(true);
+  const [ageVerification, setageVerification] = useState(false);
   const isOpen = useSelector((state) => state.modalFn);
+  const state = useSelector((state) => state.stateFn.currentState);
   const [men, setMen] = useState(false);
   const swiperRef = useRef();
   const swiperRef2 = useRef();
@@ -47,6 +53,12 @@ const HomePage = () => {
   const handleMouseLeave = () => {
     setHoveredIndex(null);
   };
+  useEffect(() => {
+    setageVerification(true);
+    return () => {
+      setageVerification(false);
+    };
+  }, []);
 
   // State to manage the visibility of the div
 
@@ -68,9 +80,11 @@ const HomePage = () => {
   //   }
   // );
   //https://cdn.shopify.com/videos/c/o/v/331b4aa9d8cb4d3b984bd160fa65030b.mp4
-  console.log(isOpen);
+  console.log(state);
   return (
     <main className="home">
+      {ageVerification && <AgeVerificationModal />}
+      {state === CURRENT_STATES.LOGOUT && <SignInModal />}
       {isOpen && <Cart />}
       <div className="topPage">
         <aside className="video-background">

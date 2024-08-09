@@ -1,11 +1,12 @@
 'use client';
 // import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+
 // import { useGSAP } from '@gsap/react';
 import '@/app/styles/main.scss';
 import { motion } from "framer-motion"
 import { FaPlus, FaMinus } from 'react-icons/fa6';
 import { MdDelete, MdModeEdit } from "react-icons/md";
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { modalActions } from '@/store/openModel';
 import { useDispatch } from 'react-redux';
@@ -28,6 +29,8 @@ const Cart = () => {
             dispatch(modalActions.closeModal())
         }
     };
+
+
 
     const slideimages = {
         images: [
