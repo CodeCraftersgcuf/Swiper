@@ -1,5 +1,6 @@
 import React from 'react'
 import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import '@/app/styles/main.scss';
 
 //swiper imports
@@ -23,6 +24,12 @@ const slides2 = [1, 2, 3, 4, 5, 6, 7, 8]
 
 const ExtraItems = () => {
     const [recommended, setRecommended] = useState(true);
+    const router = useRouter()
+
+    function handleNavigateToDetails() {
+        return router.push('/product-details')
+    }
+
     return (
         <div className=' w-9/12 flex flex-col overflow-x-auto scrollbar-hide'>
             <div className="sliders">
@@ -68,7 +75,8 @@ const ExtraItems = () => {
                                             {slideimages.images.map((image, imgIndex) => (
                                                 <SwiperSlide className="imageSlide" key={imgIndex}>
                                                     <img
-                                                        className="item-image"
+                                                        onClick={handleNavigateToDetails}
+                                                        className="item-image hover:cursor-pointer"
                                                         src={image}
                                                         alt={image.alt}
                                                     />
@@ -101,13 +109,13 @@ const ExtraItems = () => {
                                             </div>
                                             <div className="separator"></div>
                                             <div className="item-sizes">
-                                                <p>XXS</p>
-                                                <p>XS</p>
-                                                <p>S</p>
-                                                <p>M</p>
-                                                <p>L</p>
-                                                <p>XL</p>
-                                                <p>XXL</p>
+                                                <p onClick={() => addItem({ size: 'XXS' })}>XXS</p>
+                                                <p onClick={() => addItem({ size: 'XS' })}>XS</p>
+                                                <p onClick={() => addItem({ size: 'S' })}>S</p>
+                                                <p onClick={() => addItem({ size: 'M' })}>M</p>
+                                                <p onClick={() => addItem({ size: 'L' })}>L</p>
+                                                <p onClick={() => addItem({ size: 'XL' })}>XL</p>
+                                                <p onClick={() => addItem({ size: 'XXL' })}>XXL</p>
                                             </div>
                                         </div>
                                         {/* <div className="item-images">
