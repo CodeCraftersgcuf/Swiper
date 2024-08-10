@@ -26,6 +26,15 @@ body {
 
 }
 
+.added-toast {
+  /* background: white;
+  color: black;
+  font-size: 20px;
+  width: 34vw;
+  padding: 30px 20px; */
+  z-index: 150;
+}
+
 .separator {
   width: 90%;
   margin: 0 auto;
@@ -461,7 +470,7 @@ body {
 
 /* Footer Css */
 #footer {
-  width: 90%;
+  width: 100%;
   margin: auto;
   padding-top: 30px;
   display: flex;
@@ -472,6 +481,8 @@ body {
   background-color: #131212;
   z-index: 10;
   font-weight: 500;
+  padding-left: 70px;
+  padding-right: 70px;
 
   >div {
     width: 14%;
@@ -539,6 +550,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 20px;
 
   span>p {
     display: inline-block;
@@ -553,6 +565,8 @@ body {
   align-items: center;
   width: 400px;
   justify-content: space-between;
+  margin-top: 10px;
+
 }
 
 .footerIcon {
@@ -583,6 +597,9 @@ body {
       border: 2px solid #575656;
       padding: 15px 25px;
       border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
       &:last-of-type {
         width: 100%;
@@ -610,4 +627,46 @@ body {
 
   }
 
+}
+
+@media screen and (max-width: 570px) {
+  .footer-last {
+    gap: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    /* // flex-direction: column;  */
+  }
+
+  .copyRight {
+    padding-bottom: 100px;
+  }
+}
+
+@media screen and (max-width:426px) {
+  .preFooter>div {
+    left: 25% !important;
+  }
+
+  #footer>div h4 {
+    padding-left: 25px;
+  }
+
+  .footer-div-h4 {
+    padding-left: 0px !important;
+  }
+
+  .swiper-slide {
+    /* Ensure Swiper slide has appropriate styling */
+    display: flex !important;
+    justify-content: center !important;
+  }
+}
+
+@media screen and (max-width:320px) {
+  .product-page-det-card {
+    right: 10px !important;
+    width: 280px;
+  }
 }

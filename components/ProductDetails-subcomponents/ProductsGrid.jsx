@@ -20,9 +20,9 @@ const slideimages = {
 const ProductsGrid = () => {
     const [women, setWomen] = useState(true)
     return (
-        <div className='w-full h-1/2 bg-white py-6'>
+        <div className='w-full h-1/2 bg-white py-6 mt-20 lg:mt-0'>
             <div className='w-full flex flex-col overflow-x-auto scrollbar-hide'>
-                <div className="sliders">
+                <div className="sliders sm:mt-20 lg:mt-0">
                     <div className="slider-buttons ">
                         <span
                             onClick={() => setWomen(true)}
@@ -38,7 +38,7 @@ const ProductsGrid = () => {
                         </span>
                     </div>
 
-                    <div className='grid p-6 grid-cols-5 gap-6'>
+                    <div className='grid p-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5  lg:grid-cols-3 gap-6'>
                         {slides2.map((slide, index) => (
                             <SwiperSlide key={index}>
                                 <div

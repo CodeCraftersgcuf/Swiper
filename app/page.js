@@ -18,17 +18,21 @@ import { useSelector } from 'react-redux';
 import { CURRENT_STATES } from '@/store/currentState';
 import WithHeaderWrapper from '@/components/WithHeaderWrapper';
 import { AnimatePresence } from 'framer-motion';
+import { DUMMY_ITEMS } from '@/utils';
+import { itemsActions } from '@/store/cartItems';
+import { useDispatch } from 'react-redux';
 
 const slides = Array.from({ length: 40 }, (_, index) => index + 1);
-
-const womenSlides = Array.from({ length: 8 }, (_, index) => index + 1);
-const menSlides = Array.from({ length: 8 }, (_, index) => index + 1);
+const buttonSizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'];
+// const womenSlides = Array.from({ length: 8 }, (_, index) => index + 1);
+// const menSlides = Array.from({ length: 8 }, (_, index) => index + 1);
 
 const HomePage = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [women, setWomen] = useState(true);
   const [ageVerification, setageVerification] = useState(false);
-  const isOpen = useSelector((state) => state.modalFn);
+
   const state = useSelector((state) => state.stateFn.currentState);
   const [men, setMen] = useState(false);
   const swiperRef = useRef();
@@ -37,29 +41,19 @@ const HomePage = () => {
   const innerSwiperRef = useRef();
 
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  // const horizontalSlides = [1, 2, 3, 4]; // Array for horizontal slides
 
-  const womenImages = {
-    images: [
-      'https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400',
-      'https://alphalete.uk/cdn/shop/files/web_2mensshorts-graphic.jpg?crop=center&v=1714233659&width=1400',
-    ],
-  };
-
-  const menImages = {
-    images: [
-      'https://alphalete.uk/cdn/shop/files/web_2mensshorts-graphic.jpg?crop=center&v=1714233659&width=1400',
-      'https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400',
-    ],
-  };
   const images = [
     'https://cdn.shopify.com/s/files/1/1752/8007/products/TrilogyCropHoodieCelestialBlue4_400x.jpg',
     'https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400',
   ];
 
-  const hanldeNavigateDetails = (slideData) => {
+  const hanldeNavigateDetails = (product) => {
     //first add slide data with every mapping product and then fetch it from here
-    return router.push('/product-details');
+    return router.push('/product-details?id=' + product.id);
+  };
+
+  const onAddItem = ({ product, size }) => {
+    dispatch(itemsActions.addItem({ product, size, quantity: 1 }));
   };
 
   const handleMouseEnter = (index) => {
@@ -102,10 +96,10 @@ const HomePage = () => {
       <main className="home">
         {ageVerification && <AgeVerificationModal />}
         {state === CURRENT_STATES.LOGOUT && <SignInModal />}
-        <AnimatePresence>{isOpen && <Cart isOpen={isOpen} />}</AnimatePresence>
+
         <div className="topPage">
           <aside className="video-background">
-            <video className="video-overlay" autoPlay muted loop>
+            <video className="video-overlay min-w-[100%]" autoPlay muted loop>
               <source
                 src="https://cdn.shopify.com/videos/c/o/v/331b4aa9d8cb4d3b984bd160fa65030b.mp4"
                 type="video/webm"
@@ -152,14 +146,15 @@ const HomePage = () => {
               swiperRef.current = swiper;
             }}
             breakpoints={{
-              280: {
+              500: {
                 slidesPerView: 1,
+                centeredSlides: true, // Center the slide for screen width 500px and below
               },
-              320: {
+              510: {
                 slidesPerView: 2,
               },
-              680: {
-                slidesPerView: 2.5,
+              768: {
+                slidesPerView: 3,
               },
               920: {
                 slidesPerView: 3.5,
@@ -176,10 +171,10 @@ const HomePage = () => {
               <GrFormPrevious />
             </button>
             {women &&
-              womenSlides.map((slide, index) => (
+              DUMMY_ITEMS.map((item, index) => (
                 <SwiperSlide key={index}>
                   <div
-                    className="slider-items"
+                    className="slider-items lg:ps-10 sm:ps-4"
                     style={
                       index === 0 ? { margin: '30px 20px', zIndex: '100' } : {}
                     }
@@ -189,9 +184,6 @@ const HomePage = () => {
                         <Swiper
                           className="imageSwiper"
                           cssMode={true}
-                          // onBeforeInit={(swiper) => {
-                          //   innerSwiperRef.current = swiper;
-                          // }}
                           slidesPerView={1}
                           navigation={true}
                           modules={[Navigation]}
@@ -199,10 +191,10 @@ const HomePage = () => {
                           <div className="button-overlay prev-button-overlay">
                             <GrFormPrevious />
                           </div>
-                          {womenImages.images.map((image, imgIndex) => (
+                          {item.image.map((image, imgIndex) => (
                             <SwiperSlide className="imageSlide" key={imgIndex}>
                               <img
-                                onClick={() => hanldeNavigateDetails(slide)}
+                                onClick={() => hanldeNavigateDetails(item)}
                                 className="item-image hover:cursor-pointer"
                                 src={image}
                                 alt={image.alt}
@@ -219,11 +211,11 @@ const HomePage = () => {
                         </p>
                       </div>
                       <div className="item-info">
-                        <h5 className="hide">Amplify Gemini Bra</h5>
+                        <h5 className="hide">{item.name}</h5>
                         <p className="hide">
                           Gliese <span> 4 colors</span>
                         </p>
-                        <p className="hide">£120.00</p>
+                        <p className="hide">{`£${item.price.toFixed(2)}`}</p>
                         <div className="item-sizes-box">
                           <div>
                             <p>QUICK ADD</p>
@@ -231,32 +223,21 @@ const HomePage = () => {
                           </div>
                           <div className="separator"></div>
                           <div className="item-sizes">
-                            <p>XXS</p>
-                            <p>XS</p>
-                            <p>S</p>
-                            <p>M</p>
-                            <p>L</p>
-                            <p>XL</p>
-                            <p>XXL</p>
+                            {buttonSizes.map((size, index) => (
+                              <p
+                                onClick={() =>
+                                  onAddItem({ product: item, size })
+                                }
+                              >
+                                {size}
+                              </p>
+                            ))}
                           </div>
                         </div>
                         <div className="item-images">
-                          <img
-                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                            alt=""
-                          />
-                          <img
-                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                            alt=""
-                          />
-                          <img
-                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                            alt=""
-                          />
-                          <img
-                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                            alt=""
-                          />
+                          {item.image.map((image, imgIndex) => (
+                            <img key={imgIndex} src={image} alt="image" />
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -264,16 +245,19 @@ const HomePage = () => {
                 </SwiperSlide>
               ))}
             {!women &&
-              menSlides.map((slide, index) => (
+              DUMMY_ITEMS.map((item, index) => (
                 <SwiperSlide key={index}>
                   <div
-                    className="slider-items"
+                    className="slider-items lg:ps-10 sm:ps-4"
                     style={
                       index === 0 ? { margin: '30px 20px', zIndex: '100' } : {}
                     }
                   >
                     <div className="slider-item">
-                      <div className="item-image-box">
+                      <div
+                        className="item-image-box"
+                        onClick={() => hanldeNavigateDetails(item)}
+                      >
                         <Swiper
                           className="imageSwiper"
                           cssMode={true}
@@ -287,10 +271,9 @@ const HomePage = () => {
                           <div className="button-overlay prev-button-overlay">
                             <GrFormPrevious />
                           </div>
-                          {menImages.images.map((image, imgIndex) => (
+                          {item.image.map((image, imgIndex) => (
                             <SwiperSlide className="imageSlide" key={imgIndex}>
                               <img
-                                onClick={() => hanldeNavigateDetails(slide)}
                                 className="item-image hover:cursor-pointer"
                                 src={image}
                                 alt={image.alt}
@@ -307,11 +290,11 @@ const HomePage = () => {
                         </p>
                       </div>
                       <div className="item-info">
-                        <h5 className="hide">Amplify Gemini Bra</h5>
+                        <h5 className="hide">{item.name}</h5>
                         <p className="hide">
                           Gliese <span> 4 colors</span>
                         </p>
-                        <p className="hide">£120.00</p>
+                        <p className="hide">{`£${item.price.toFixed(2)}`}</p>
                         <div className="item-sizes-box">
                           <div>
                             <p>QUICK ADD</p>
@@ -319,32 +302,17 @@ const HomePage = () => {
                           </div>
                           <div className="separator"></div>
                           <div className="item-sizes">
-                            <p>XXS</p>
-                            <p>XS</p>
-                            <p>S</p>
-                            <p>M</p>
-                            <p>L</p>
-                            <p>XL</p>
-                            <p>XXL</p>
+                            {buttonSizes.map((size, index) => (
+                              <p onClick={() => addItem({ item, size })}>
+                                {size}
+                              </p>
+                            ))}
                           </div>
                         </div>
                         <div className="item-images">
-                          <img
-                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                            alt=""
-                          />
-                          <img
-                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                            alt=""
-                          />
-                          <img
-                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                            alt=""
-                          />
-                          <img
-                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                            alt=""
-                          />
+                          {item.image.map((image, imgIndex) => (
+                            <img key={imgIndex} src={image} alt="image" />
+                          ))}
                         </div>
                       </div>
                     </div>

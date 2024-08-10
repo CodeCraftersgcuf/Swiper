@@ -11,6 +11,9 @@ export const itemsSlice = createSlice({
   name: 'items',
   initialState,
   reducers: {
+    resetMessage(state) {
+      state.message = null;
+    },
     addItem(state, action) {
       const { product, size, quantity } = action.payload;
       // console.log(product);
@@ -22,9 +25,10 @@ export const itemsSlice = createSlice({
       // console.log(itemExists);
 
       if (itemExists) {
-        state.message = 'Item already exists';
+        state.message = 'itemExists';
       } else {
-        state.items.push(action.payload); // Adding the item to the state
+        state.items.push(action.payload);
+        state.message = 'itemAdded';
       }
     },
     removeItem(state, action) {
@@ -36,6 +40,7 @@ export const itemsSlice = createSlice({
 
       if (itemIndex !== -1) {
         state.items.splice(itemIndex, 1);
+        state.message = 'itemRemoved';
       } else {
         state.message = 'Item does not exist';
       }
@@ -60,6 +65,7 @@ export const itemsSlice = createSlice({
       if (itemIndex !== -1) {
         if (state.items[itemIndex].quantity === 1) {
           state.items.splice(itemIndex, 1);
+          state.message = 'itemRemoved';
         } else {
           state.items[itemIndex].quantity -= 1;
         }

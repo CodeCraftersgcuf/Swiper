@@ -23,12 +23,13 @@ const ExtraItems = ({ addItem }) => {
     const [recommended, setRecommended] = useState(true);
     const router = useRouter()
 
-    function handleNavigateToDetails() {
-        return router.push('/product-details')
+    function handleNavigateToDetails(product) {
+        console.log(product)
+        return router.push('/product-details?id=' + product.id)
     }
 
     return (
-        <div className=' w-9/12 flex flex-col overflow-x-auto scrollbar-hide'>
+        <div className='main-card-res-none lg:w-9/12 flex md:items-center md:w-[550px] sm:w-[400px]  flex-col overflow-x-auto scrollbar-hide'>
             <div className="sliders">
                 <div className="slider-buttons ">
                     <span
@@ -45,7 +46,7 @@ const ExtraItems = ({ addItem }) => {
                     </span>
                 </div>
 
-                <div className='grid p-6 grid-cols-4 gap-6'>
+                <div className='grid p-6 sm:grid-cols-1 xsm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
                     {DUMMY_ITEMS.map((product, index) => (
                         <SwiperSlide key={index}>
                             <div
@@ -55,7 +56,10 @@ const ExtraItems = ({ addItem }) => {
                             // }
                             >
                                 <div className="slider-item">
-                                    <div className="item-image-box">
+                                    <div
+                                        className="item-image-box"
+                                        onClick={() => handleNavigateToDetails(product)}
+                                    >
                                         <Swiper
                                             className="imageSwiper"
                                             cssMode={true}
@@ -72,8 +76,7 @@ const ExtraItems = ({ addItem }) => {
                                             {product.image.map((image, imgIndex) => (
                                                 <SwiperSlide className="imageSlide" key={imgIndex}>
                                                     <img
-                                                        onClick={handleNavigateToDetails}
-                                                        className="item-image hover:cursor-pointer"
+                                                        className="item-image"
                                                         src={image}
                                                         alt={image.alt}
                                                     />

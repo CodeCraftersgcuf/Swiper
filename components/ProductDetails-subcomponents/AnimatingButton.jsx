@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 
-const AnimatingButtons = ({ text }) => {
+const AnimatingButtons = ({ name, detail }) => {
     const controls = useAnimation();
     const [isOpen, setIsOpen] = useState(false);
 
@@ -21,12 +21,12 @@ const AnimatingButtons = ({ text }) => {
     };
 
     return (
-        <ul className="p-2 border-y list-disc font-semibold">
+        <>
             <div
                 className="flex justify-between items-center text-[12px] text-gray-800 cursor-pointer"
                 onClick={toggleOpen}
             >
-                <span>{text}</span>
+                <span>{name}</span>
                 <motion.span
                     className='text-lg'
                     animate={controls}
@@ -41,18 +41,9 @@ const AnimatingButtons = ({ text }) => {
                 animate={controls}
                 variants={listItemsVariants}
             >
-                its a nice skirt
+                {detail}
             </motion.li>
-            <motion.li
-                className="text-[12px] text-gray-400 block overflow-hidden"
-                initial="collapsed"
-                animate={controls}
-                variants={listItemsVariants}
-            >
-                its very cool to wear and safe to use even in the direct sunlight where
-                absolutekskjkjsjf skjfsdkjs
-            </motion.li>
-        </ul>
+        </>
     );
 };
 
