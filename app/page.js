@@ -2,7 +2,7 @@
 // import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 // import { useGSAP } from '@gsap/react';
 import './styles/main.scss';
-
+import { useRouter } from 'next/navigation';
 import { FaPlus } from 'react-icons/fa6';
 import React, { useRef, useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -21,9 +21,11 @@ import { AnimatePresence } from 'framer-motion';
 
 const slides = Array.from({ length: 40 }, (_, index) => index + 1);
 
-const slides2 = Array.from({ length: 8 }, (_, index) => index + 1);
+const womenSlides = Array.from({ length: 8 }, (_, index) => index + 1);
+const menSlides = Array.from({ length: 8 }, (_, index) => index + 1);
 
 const HomePage = () => {
+  const router = useRouter();
   const [women, setWomen] = useState(true);
   const [ageVerification, setageVerification] = useState(false);
   const isOpen = useSelector((state) => state.modalFn);
@@ -37,16 +39,28 @@ const HomePage = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   // const horizontalSlides = [1, 2, 3, 4]; // Array for horizontal slides
 
-  const slideimages = {
+  const womenImages = {
     images: [
       'https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400',
       'https://alphalete.uk/cdn/shop/files/web_2mensshorts-graphic.jpg?crop=center&v=1714233659&width=1400',
+    ],
+  };
+
+  const menImages = {
+    images: [
+      'https://alphalete.uk/cdn/shop/files/web_2mensshorts-graphic.jpg?crop=center&v=1714233659&width=1400',
+      'https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400',
     ],
   };
   const images = [
     'https://cdn.shopify.com/s/files/1/1752/8007/products/TrilogyCropHoodieCelestialBlue4_400x.jpg',
     'https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400',
   ];
+
+  const hanldeNavigateDetails = (slideData) => {
+    //first add slide data with every mapping product and then fetch it from here
+    return router.push('/product-details');
+  };
 
   const handleMouseEnter = (index) => {
     setHoveredIndex(index);
@@ -106,9 +120,11 @@ const HomePage = () => {
             <button className="button">Shop Men</button>
           </div>
         </div>
+
+        {/* Upper new arrivals */}
         <div className="slider-heading">
           <h2>
-            <span>{`Women's`}</span> NEW ARRIVALS
+            <span>{`${women ? `Women's` : `Men's`}`}</span> NEW ARRIVALS
           </h2>
           <button className="button">SHOP ALL</button>
         </div>
@@ -118,13 +134,13 @@ const HomePage = () => {
               onClick={() => setWomen(true)}
               className={women ? 'bg-gray' : ''}
             >
-              Women's
+              {`Women's`}
             </span>
             <span
               onClick={() => setWomen(false)}
               className={!women ? 'bg-gray' : ''}
             >
-              Men's
+              {`Men's`}
             </span>
           </div>
 
@@ -159,92 +175,182 @@ const HomePage = () => {
             >
               <GrFormPrevious />
             </button>
-            {slides2.map((slide, index) => (
-              <SwiperSlide key={index}>
-                <div
-                  className="slider-items"
-                  style={
-                    index === 0 ? { margin: '30px 20px', zIndex: '100' } : {}
-                  }
-                >
-                  <div className="slider-item">
-                    <div className="item-image-box">
-                      <Swiper
-                        className="imageSwiper"
-                        cssMode={true}
-                        // onBeforeInit={(swiper) => {
-                        //   innerSwiperRef.current = swiper;
-                        // }}
-                        slidesPerView={1}
-                        navigation={true}
-                        modules={[Navigation]}
-                      >
-                        <div className="button-overlay prev-button-overlay">
-                          <GrFormPrevious />
-                        </div>
-                        {slideimages.images.map((image, imgIndex) => (
-                          <SwiperSlide className="imageSlide" key={imgIndex}>
-                            <img
-                              className="item-image"
-                              src={image}
-                              alt={image.alt}
-                            />
-                          </SwiperSlide>
-                        ))}
-                        <div className="button-overlay next-button-overlay">
-                          <GrFormNext />
-                        </div>
-                      </Swiper>
-                      <p className="new">NEW</p>
-                      <p className="plus">
-                        <FaPlus />
-                      </p>
-                    </div>
-                    <div className="item-info">
-                      <h5 className="hide">Amplify Gemini Bra</h5>
-                      <p className="hide">
-                        Gliese <span> 4 colors</span>
-                      </p>
-                      <p className="hide">£120.00</p>
-                      <div className="item-sizes-box">
-                        <div>
-                          <p>QUICK ADD</p>
-                          <FaPlus className="plus" />
-                        </div>
-                        <div className="separator"></div>
-                        <div className="item-sizes">
-                          <p>XXS</p>
-                          <p>XS</p>
-                          <p>S</p>
-                          <p>M</p>
-                          <p>L</p>
-                          <p>XL</p>
-                          <p>XXL</p>
-                        </div>
+            {women &&
+              womenSlides.map((slide, index) => (
+                <SwiperSlide key={index}>
+                  <div
+                    className="slider-items"
+                    style={
+                      index === 0 ? { margin: '30px 20px', zIndex: '100' } : {}
+                    }
+                  >
+                    <div className="slider-item">
+                      <div className="item-image-box">
+                        <Swiper
+                          className="imageSwiper"
+                          cssMode={true}
+                          // onBeforeInit={(swiper) => {
+                          //   innerSwiperRef.current = swiper;
+                          // }}
+                          slidesPerView={1}
+                          navigation={true}
+                          modules={[Navigation]}
+                        >
+                          <div className="button-overlay prev-button-overlay">
+                            <GrFormPrevious />
+                          </div>
+                          {womenImages.images.map((image, imgIndex) => (
+                            <SwiperSlide className="imageSlide" key={imgIndex}>
+                              <img
+                                onClick={() => hanldeNavigateDetails(slide)}
+                                className="item-image hover:cursor-pointer"
+                                src={image}
+                                alt={image.alt}
+                              />
+                            </SwiperSlide>
+                          ))}
+                          <div className="button-overlay next-button-overlay">
+                            <GrFormNext />
+                          </div>
+                        </Swiper>
+                        <p className="new">NEW</p>
+                        <p className="plus">
+                          <FaPlus />
+                        </p>
                       </div>
-                      <div className="item-images">
-                        <img
-                          src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                          alt=""
-                        />
-                        <img
-                          src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                          alt=""
-                        />
-                        <img
-                          src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                          alt=""
-                        />
-                        <img
-                          src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                          alt=""
-                        />
+                      <div className="item-info">
+                        <h5 className="hide">Amplify Gemini Bra</h5>
+                        <p className="hide">
+                          Gliese <span> 4 colors</span>
+                        </p>
+                        <p className="hide">£120.00</p>
+                        <div className="item-sizes-box">
+                          <div>
+                            <p>QUICK ADD</p>
+                            <FaPlus className="plus" />
+                          </div>
+                          <div className="separator"></div>
+                          <div className="item-sizes">
+                            <p>XXS</p>
+                            <p>XS</p>
+                            <p>S</p>
+                            <p>M</p>
+                            <p>L</p>
+                            <p>XL</p>
+                            <p>XXL</p>
+                          </div>
+                        </div>
+                        <div className="item-images">
+                          <img
+                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
+                            alt=""
+                          />
+                          <img
+                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
+                            alt=""
+                          />
+                          <img
+                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
+                            alt=""
+                          />
+                          <img
+                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
+                            alt=""
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
+                </SwiperSlide>
+              ))}
+            {!women &&
+              menSlides.map((slide, index) => (
+                <SwiperSlide key={index}>
+                  <div
+                    className="slider-items"
+                    style={
+                      index === 0 ? { margin: '30px 20px', zIndex: '100' } : {}
+                    }
+                  >
+                    <div className="slider-item">
+                      <div className="item-image-box">
+                        <Swiper
+                          className="imageSwiper"
+                          cssMode={true}
+                          // onBeforeInit={(swiper) => {
+                          //   innerSwiperRef.current = swiper;
+                          // }}
+                          slidesPerView={1}
+                          navigation={true}
+                          modules={[Navigation]}
+                        >
+                          <div className="button-overlay prev-button-overlay">
+                            <GrFormPrevious />
+                          </div>
+                          {menImages.images.map((image, imgIndex) => (
+                            <SwiperSlide className="imageSlide" key={imgIndex}>
+                              <img
+                                onClick={() => hanldeNavigateDetails(slide)}
+                                className="item-image hover:cursor-pointer"
+                                src={image}
+                                alt={image.alt}
+                              />
+                            </SwiperSlide>
+                          ))}
+                          <div className="button-overlay next-button-overlay">
+                            <GrFormNext />
+                          </div>
+                        </Swiper>
+                        <p className="new">NEW</p>
+                        <p className="plus">
+                          <FaPlus />
+                        </p>
+                      </div>
+                      <div className="item-info">
+                        <h5 className="hide">Amplify Gemini Bra</h5>
+                        <p className="hide">
+                          Gliese <span> 4 colors</span>
+                        </p>
+                        <p className="hide">£120.00</p>
+                        <div className="item-sizes-box">
+                          <div>
+                            <p>QUICK ADD</p>
+                            <FaPlus className="plus" />
+                          </div>
+                          <div className="separator"></div>
+                          <div className="item-sizes">
+                            <p>XXS</p>
+                            <p>XS</p>
+                            <p>S</p>
+                            <p>M</p>
+                            <p>L</p>
+                            <p>XL</p>
+                            <p>XXL</p>
+                          </div>
+                        </div>
+                        <div className="item-images">
+                          <img
+                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
+                            alt=""
+                          />
+                          <img
+                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
+                            alt=""
+                          />
+                          <img
+                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
+                            alt=""
+                          />
+                          <img
+                            src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
             <button
               onClick={() => swiperRef.current?.slideNext()}
               className="swiper-button-next"
@@ -300,20 +406,20 @@ const HomePage = () => {
 
           <div className="slider-heading">
             <h2>
-              <span>Women's</span> NEW ARRIVALS
+              <span>{`Women's`}</span> NEW ARRIVALS
             </h2>
             <button className="button">SHOP ALL</button>
           </div>
 
           <div className="slider-buttons">
             <span onClick={() => setMen(true)} className={men ? 'bg-gray' : ''}>
-              Women's
+              {`Women's`}
             </span>
             <span
               onClick={() => setMen(false)}
               className={!men ? 'bg-gray' : ''}
             >
-              Men's
+              {`Men's`}
             </span>
           </div>
 

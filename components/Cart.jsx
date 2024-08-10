@@ -6,9 +6,12 @@ import { useDispatch } from 'react-redux';
 import { motion } from "framer-motion"
 import ExtraItems from './Cart-subcomponents/ExtraItems';
 import OrdersManagementBox from './Cart-subcomponents/OrdersManagementBox';
+import { itemsActions } from '@/store/cartItems';
+import { useSelector } from 'react-redux';
 
 
 const Cart = ({ isOpen }) => {
+    const addedItems = useSelector((state) => state.itemsFn.items)
     const dispatch = useDispatch()
     const closeDiv = (e) => {
         if (e.target.id === 'modal-background') {
@@ -16,9 +19,19 @@ const Cart = ({ isOpen }) => {
         }
     };
 
+    const handleRemoveItem = (item) => {
+        dispatch(itemsActions.removeItem(item))
+    }
+    const handleDecrement = (item) => {
+        dispatch(itemsActions.decrement(item))
+    }
+    const handleIncrement = (item) => {
+        dispatch(itemsActions.increment(item))
+    }
 
-    const handleAddItem = (index) => {
-        console.log(index)
+
+    const handleAddItem = ({ product, size }) => {
+        dispatch(itemsActions.addItem({ product, size, quantity: 1 }))
     };
 
     return (
@@ -32,8 +45,13 @@ const Cart = ({ isOpen }) => {
             onClick={closeDiv}
         >
             <div className='w-screen h-[90vh] flex justify-between bg-white text-black '>
-                <ExtraItems />
-                <OrdersManagementBox />
+                <ExtraItems addItem={handleAddItem} />
+                <OrdersManagementBox
+                    addedItems={addedItems}
+                    removeItem={handleRemoveItem}
+                    onDecrement={handleDecrement}
+                    onIncrement={handleIncrement}
+                />
             </div>
         </motion.div>
     )

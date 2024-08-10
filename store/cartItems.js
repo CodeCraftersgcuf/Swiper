@@ -1,42 +1,72 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = [
-  {
-    item: null,
-    sizes: [],
-    quantity: null,
-    sizes: null,
-  },
-];
+//Accepting data in the following pattern:
+// {item: null, size: null, quantity: null,},
+
+const initialState = {
+  items: [],
+  message: null,
+};
 export const itemsSlice = createSlice({
   name: 'items',
   initialState,
   reducers: {
     addItem(state, action) {
-      if (state.indexOf(action.payload) < 1) {
-        return state.push(action);
+      const { product, size, quantity } = action.payload;
+      // console.log(product);
+      state.message = null;
+
+      const itemExists = state.items.some(
+        (item) => item.product.id === product.id && item.size === size
+      );
+      // console.log(itemExists);
+
+      if (itemExists) {
+        state.message = 'Item already exists';
+      } else {
+        state.items.push(action.payload); // Adding the item to the state
       }
     },
     removeItem(state, action) {
-      if (state.indexOf(action.payload) > -1) {
-        return state.filter((item) => item !== action.payload);
+      const { product, size, quantity } = action.payload;
+      state.message = null;
+      const itemIndex = state.items.findIndex(
+        (item) => item.product.id === product.id && item.size === size
+      );
+
+      if (itemIndex !== -1) {
+        state.items.splice(itemIndex, 1);
+      } else {
+        state.message = 'Item does not exist';
       }
     },
-    // filterApproved(state, action) {
-    //   return (state.approved = state.orders.filter(
-    //     (item) => item.status === 'pending'
-    //   ));
-    // },
-    // filterDeclined(state, action) {
-    //   return (state.declined = state.orders.filter(
-    //     (item) => item.status === 'pending'
-    //   ));
-    // },
-    // filterPending(state, action) {
-    //   return (state.pending = state.orders.filter(
-    //     (item) => item.status === 'pending'
-    //   ));
-    // },
+    increment(state, action) {
+      const { product, size, quantity } = action.payload;
+
+      const itemIndex = state.items.findIndex(
+        (item) => item.product.id === product.id && item.size === size
+      );
+      if (itemIndex !== -1) {
+        state.items[itemIndex].quantity += 1;
+      } else {
+        state.message = 'Item does not exist';
+      }
+    },
+    decrement(state, action) {
+      const { product, size, quantity } = action.payload;
+      const itemIndex = state.items.findIndex(
+        (item) => item.product.id === product.id && item.size === size
+      );
+      if (itemIndex !== -1) {
+        if (state.items[itemIndex].quantity === 1) {
+          state.items.splice(itemIndex, 1);
+        } else {
+          state.items[itemIndex].quantity -= 1;
+        }
+      } else {
+        state.message = 'Item does not exist';
+      }
+    },
   },
 });
 

@@ -17,7 +17,8 @@ import { useDispatch } from "react-redux";
 
 const Header = () => {
   const dispatch = useDispatch()
-  const items = useSelector((state) => state.itemsFn)
+  const items = useSelector((state) => state.itemsFn.items)
+  const stateMessage = useSelector((state) => state.itemsFn.message)
   const router = useRouter()
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -40,6 +41,7 @@ const Header = () => {
   const showCartModal = () => {
     dispatch(modalActions.openModal())
   }
+
   return (
     <>
       <header>

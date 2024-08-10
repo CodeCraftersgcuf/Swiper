@@ -1,9 +1,9 @@
 'use client'
 import React, { useRef, useState } from 'react';
-import AbsolutePart from '@/components/details/AbsolutePart';
-import DetailsSwiper from '@/components/details/DetailsSwiper';
+import AbsolutePart from '@/components/ProductDetails-subcomponents/AbsolutePart';
+import DetailsSwiper from '@/components/ProductDetails-subcomponents/DetailsSwiper';
 import WithHeaderWrapper from '@/components/WithHeaderWrapper';
-import ProductsGrid from '@/components/details/ProductsGrid';
+import ProductsGrid from '@/components/ProductDetails-subcomponents/ProductsGrid';
 
 export default function DetailsPage() {
 

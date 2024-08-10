@@ -13,16 +13,13 @@ import { FreeMode, Grid, Navigation, Pagination, Mousewheel } from 'swiper/modul
 //icons import 
 import { FaPlus, FaMinus } from 'react-icons/fa6';
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
+import { DUMMY_ITEMS } from '@/utils';
 
-const slideimages = {
-    images: [
-        'https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400',
-        'https://alphalete.uk/cdn/shop/files/web_2mensshorts-graphic.jpg?crop=center&v=1714233659&width=1400',
-    ],
-};
+
+
 const slides2 = [1, 2, 3, 4, 5, 6, 7, 8]
 
-const ExtraItems = () => {
+const ExtraItems = ({ addItem }) => {
     const [recommended, setRecommended] = useState(true);
     const router = useRouter()
 
@@ -49,7 +46,7 @@ const ExtraItems = () => {
                 </div>
 
                 <div className='grid p-6 grid-cols-4 gap-6'>
-                    {slides2.map((slide, index) => (
+                    {DUMMY_ITEMS.map((product, index) => (
                         <SwiperSlide key={index}>
                             <div
                                 className="slider-items"
@@ -72,7 +69,7 @@ const ExtraItems = () => {
                                             <div className="button-overlay prev-button-overlay">
                                                 <GrFormPrevious />
                                             </div>
-                                            {slideimages.images.map((image, imgIndex) => (
+                                            {product.image.map((image, imgIndex) => (
                                                 <SwiperSlide className="imageSlide" key={imgIndex}>
                                                     <img
                                                         onClick={handleNavigateToDetails}
@@ -93,29 +90,30 @@ const ExtraItems = () => {
                                     </div>
                                     <div className="flex flex-col h-[40px] transition-all duration-300 relative cursor-pointer">
                                         <div className='flex flex-col bg-white py-2 z-10'>
-                                            <h5 className="text-[12px] text-black">Amplify Gemini Bra</h5>
+                                            <h5 className="text-[12px] text-black">{product.name}</h5>
                                             <p className="text-[10px] text-gray-600">
-                                                Gliese <span> 4 colors</span>
+                                                {product.color} <span> 4 colors</span>
                                             </p>
-                                            <p className="text-[10px] text-black ">£120.00</p>
+                                            <p className="text-[10px] text-black ">
+                                                {`£${product.price.toFixed(2)}`}
+                                            </p>
                                         </div>
                                         <div className="item-sizes-box">
                                             <div>
                                                 <p className='text-[10px]'>QUICK ADD</p>
                                                 <FaPlus
-                                                    onClick={() => handleAddItem(index)}
                                                     className="plus"
                                                 />
                                             </div>
                                             <div className="separator"></div>
                                             <div className="item-sizes">
-                                                <p onClick={() => addItem({ size: 'XXS' })}>XXS</p>
-                                                <p onClick={() => addItem({ size: 'XS' })}>XS</p>
-                                                <p onClick={() => addItem({ size: 'S' })}>S</p>
-                                                <p onClick={() => addItem({ size: 'M' })}>M</p>
-                                                <p onClick={() => addItem({ size: 'L' })}>L</p>
-                                                <p onClick={() => addItem({ size: 'XL' })}>XL</p>
-                                                <p onClick={() => addItem({ size: 'XXL' })}>XXL</p>
+                                                <p onClick={() => addItem({ product: product, size: 'XXS' })}>XXS</p>
+                                                <p onClick={() => addItem({ product: product, size: 'XS' })}>XS</p>
+                                                <p onClick={() => addItem({ product: product, size: 'S' })}>S</p>
+                                                <p onClick={() => addItem({ product: product, size: 'M' })}>M</p>
+                                                <p onClick={() => addItem({ product: product, size: 'L' })}>L</p>
+                                                <p onClick={() => addItem({ product: product, size: 'XL' })}>XL</p>
+                                                <p onClick={() => addItem({ product: product, size: 'XXL' })}>XXL</p>
                                             </div>
                                         </div>
                                         {/* <div className="item-images">
