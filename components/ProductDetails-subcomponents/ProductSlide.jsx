@@ -4,12 +4,16 @@ import { Navigation } from 'swiper/modules';
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 import { FaPlus, FaMinus } from 'react-icons/fa6';
 import '@/app/styles/main.scss';
+import { modalActions } from '@/store/openModel';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 
 const ProductSlide = ({ product, addItem }) => {
+    const dispatch = useDispatch()
     const [quantity, setQuantity] = useState(0)
     const router = useRouter()
     const handleNavigateDetails = (product) => {
+        dispatch(modalActions.closeModal())
         return router.push('/product-details?id=' + product.id)
     }
 
@@ -20,7 +24,9 @@ const ProductSlide = ({ product, addItem }) => {
     }
 
     const decrementItem = () => {
-        setQuantity(quantity - 1)
+        if (quantity > 0) {
+            setQuantity(quantity - 1)
+        }
     }
     return (
         <SwiperSlide>
@@ -46,12 +52,15 @@ const ProductSlide = ({ product, addItem }) => {
                                 <GrFormPrevious />
                             </div>
                             {product.image.map((image, imgIndex) => (
-                                <SwiperSlide className="imageSlide" key={imgIndex}>
+                                <SwiperSlide
+                                    className="imageSlide" key={imgIndex}
+                                    onClick={() => handleNavigateDetails(product)}
+                                >
                                     <img
                                         className="item-image"
                                         src={image}
                                         alt={image.alt}
-                                        onClick={() => handleNavigateDetails(product)}
+
                                     />
                                 </SwiperSlide>
                             ))}
@@ -105,24 +114,6 @@ const ProductSlide = ({ product, addItem }) => {
                                 <img key={imgIndex} src={image} alt="image" />
                             ))}
                         </div>
-                        {/* <div className="item-images">
-                                <img
-                                    src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                                    alt=""
-                                />
-                                <img
-                                    src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                                    alt=""
-                                />
-                                <img
-                                    src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                                    alt=""
-                                />
-                                <img
-                                    src="https://alphalete.uk/cdn/shop/files/4U8A0538.jpg?crop=center&v=1714233619&width=1400"
-                                    alt=""
-                                />
-                            </div> */}
                     </div>
                 </div>
             </div>

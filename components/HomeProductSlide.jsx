@@ -75,8 +75,11 @@ const HomeProductSlide = ({ product, onAddItem, handleNavigateDetails }) => {
                         </p>
                         <div>{quantity}</div>
                         <p
-                            onClick={
-                                () => setQuantity(quantity - 1)
+                            onClick={() => {
+                                if (quantity > 0) {
+                                    setQuantity(quantity - 1)
+                                }
+                            }
                             }
                         >
                             <FaMinus />

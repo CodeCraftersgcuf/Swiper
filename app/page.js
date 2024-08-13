@@ -224,100 +224,26 @@ const HomePage = () => {
             >
               <GrFormPrevious />
             </button>
-            {women &&
-              DUMMY_ITEMS.map((item, index) => (
-                <SwiperSlide key={index}>
-                  <div
-                    className="slider-items lg:ps-12 md:ps-8 sm:ps-4 ps-0"
-                    // style={
-                    //       index === 0 ? { paddingLeft: "50px", zIndex: '100' } : {}
-                    //     }
-                  >
-                    {/* <div className="slider-item">
-                      <div className="item-image-box">
-                        <Swiper
-                          className="imageSwiper"
-                          cssMode={true}
-                          slidesPerView={1}
-                          navigation={true}
-                          modules={[Navigation]}
-                        >
-                          <div className="button-overlay prev-button-overlay">
-                            <GrFormPrevious />
-                          </div>
-                          {item.image.map((image, imgIndex) => (
-                            <SwiperSlide className="imageSlide" key={imgIndex}>
-                              <img
-                                onClick={() => hanldeNavigateDetails(item)}
-                                className="item-image hover:cursor-pointer"
-                                src={image}
-                                alt={image.alt}
-                              />
-                            </SwiperSlide>
-                          ))}
-                          <div className="button-overlay next-button-overlay">
-                            <GrFormNext />
-                          </div>
-                        </Swiper>
-                        <p className="new">NEW</p>
-                        <p className="plus">
-                          <FaPlus />
-                        </p>
-                      </div>
-                      <div className="item-info">
-                        <h5 className="hide">{item.name}</h5>
-                        <p className="hide">
-                          Gliese <span> 4 colors</span>
-                        </p>
-                        <p className="hide">{`£${item.price.toFixed(2)}`}</p>
-                        <div className="item-sizes-box">
-                          <div>
-                            <p>QUICK ADD</p>
-                            <FaPlus
-                              className="plus"
-                              // onClick={() =>
-                              //   onAddItem({ product: item, quantity })
-                              // }
-                            />
-                          </div>
-                          <div className="separator"></div>
-                          <div className="item-sizes">
-                            <p
-                            // onClick={() =>
-                            //   onIncrement(() => setQuantity(quantity - 1))
-                            // }
-                            >
-                              <FaPlus />
-                            </p>
-                            <div>{'2'}</div>
-                            <p
-                            // onClick={() =>
-                            //   onDecrement(() => setQuantity(quantity - 1))
-                            // }
-                            >
-                              <FaMinus />
-                            </p>
-                          </div>
-                        </div>
-                        <div className="item-images">
-                          {item.image.map((image, imgIndex) => (
-                            <img key={imgIndex} src={image} alt="image" />
-                          ))}
-                        </div>
-                      </div>
-                    </div> */}
-                    <div className="slider-item">
-                      <HomeProductSlide
-                        key={index}
-                        product={item}
-                        onAddItem={onAddItem}
-                        handleNavigateDetails={hanldeNavigateDetails}
-                      />
-                    </div>
+            {DUMMY_ITEMS.map((item, index) => (
+              <SwiperSlide key={index}>
+                <div
+                  className="slider-items lg:ps-12 md:ps-8 sm:ps-4 ps-0"
+                  // style={
+                  //       index === 0 ? { paddingLeft: "50px", zIndex: '100' } : {}
+                  //     }
+                >
+                  <div className="slider-item">
+                    <HomeProductSlide
+                      key={index}
+                      product={item}
+                      onAddItem={onAddItem}
+                      handleNavigateDetails={hanldeNavigateDetails}
+                    />
                   </div>
-                </SwiperSlide>
-              ))}
-            {!women &&
+                </div>
+              </SwiperSlide>
+            ))}
+            {/* {!women &&
               DUMMY_ITEMS.map((item, index) => (
                 <SwiperSlide key={index}>
                   <div
@@ -391,7 +317,7 @@ const HomePage = () => {
                     </div>
                   </div>
                 </SwiperSlide>
-              ))}
+              ))} */}
             <button
               onClick={() => swiperRef.current?.slideNext()}
               className="swiper-button-next"
