@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -6,14 +6,16 @@ import 'swiper/css/pagination';
 import '../../app/styles/swiper6.scss';
 import { FreeMode, Pagination } from 'swiper/modules';
 
-const DetailsSwiper = ({ productImages }) => {
+const DetailsSwiper = forwardRef(({ productImages }, ref) => {
   return (
     <Swiper
-      slidesPerView={1}  // Default for small screens
+      ref={ref}
+      slidesPerView={1} // Default for small screens
       spaceBetween={0}
       freeMode={true}
+      loop={true}
       modules={[FreeMode, Pagination]}
-      className="mySwiper"
+      className="mySwiper apni-class"
       breakpoints={{
         // when window width is >= 640px
         640: {
@@ -29,17 +31,18 @@ const DetailsSwiper = ({ productImages }) => {
         },
       }}
     >
-      {productImages && productImages.map((image, index) => (
-        <SwiperSlide key={index}>
-          <img
-            src={image}
-            alt="product"
-            className="w-full h-full object-cover"
-          />
-        </SwiperSlide>
-      ))}
+      {productImages &&
+        productImages.map((image, index) => (
+          <SwiperSlide key={index}>
+            <img
+              src={image}
+              alt="product"
+              className="w-full h-full object-cover"
+            />
+          </SwiperSlide>
+        ))}
     </Swiper>
-  )
-}
+  );
+})
 
 export default DetailsSwiper

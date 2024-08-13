@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, forwardRef, useEffect } from 'react'
 import { FaPlus, FaMinus } from 'react-icons/fa6';
 import { MdDelete, MdModeEdit } from "react-icons/md";
 import { motion } from 'framer-motion';
@@ -6,14 +6,21 @@ import { totalPrice } from '@/helpers/totalPrice';
 import { useRouter } from 'next/navigation';
 
 
+
 const cartPricingOverflow = [1, 2, 3, 4, 5]
 
 const OrdersManagementBox = ({ addedItems, removeItem, onDecrement, onIncrement }) => {
+    const lastElementRef = useRef()
     const router = useRouter()
     const handleSubmit = () => {
         //submit order to backend
         return router.push('/payment')
     }
+
+    useEffect(() => {
+        lastElementRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }, [addedItems])
+
     return (
         <div className='flex  flex-col lg:w-3/12 md-[430px] text-black border border-black justify-between'>
             <div className='flex items-center justify-center h-20 border-b border-black'>
@@ -70,6 +77,7 @@ const OrdersManagementBox = ({ addedItems, removeItem, onDecrement, onIncrement 
                                 </button>
                             </div>
                         </div>
+                        {index === addedItems.length - 1 && <div ref={lastElementRef} />}
                     </div>
                 ))}
 

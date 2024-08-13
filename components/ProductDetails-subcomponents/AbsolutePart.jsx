@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AnimatingButton from './AnimatingButton'
 import { motion } from 'framer-motion'
 import { useDispatch } from 'react-redux'
@@ -7,7 +7,7 @@ import { DUMMY_ITEMS } from '@/utils'
 
 const buttonSizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL']
 
-const AbsolutePart = ({ product }) => {
+const AbsolutePart = ({ product, centerSlide }) => {
     console.log(product)
     const dispatch = useDispatch()
     const [selectedImage, setSelectedImage] = useState(null)
@@ -15,6 +15,11 @@ const AbsolutePart = ({ product }) => {
     const onAddItem = ({ product, size }) => {
         const item = DUMMY_ITEMS.find((item) => item.id === product.id)
         dispatch(itemsActions.addItem({ product: item, size, quantity: 1 }))
+    }
+
+    const handleSelectedImage = (index) => {
+        setSelectedImage(index)
+        centerSlide(index)
     }
 
     return (
@@ -37,8 +42,8 @@ const AbsolutePart = ({ product }) => {
                         {product.images.map((image, index) => (
                             <div
                                 key={index}
-                                className={`w-14 border border-gray-400 rounded-lg  hover:cursor-pointer ${selectedImage === image ? 'scale-105 border-2' : ''}`}
-                                onClick={() => setSelectedImage(image)}
+                                className={`w-14 border border-gray-400 rounded-lg  hover:cursor-pointer ${selectedImage === index ? 'scale-105 border-2' : ''}`}
+                                onClick={() => handleSelectedImage(index)}
                             >
                                 <img className='rounded-lg'
                                     src={image}
