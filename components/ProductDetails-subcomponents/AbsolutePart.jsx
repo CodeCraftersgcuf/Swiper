@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import AnimatingButton from './AnimatingButton'
 import { motion } from 'framer-motion'
-import { useDispatch } from 'react-redux'
-import { itemsActions } from '@/store/cartItems'
-import { DUMMY_ITEMS } from '@/utils'
 
 const buttonSizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL']
 
-const AbsolutePart = ({ product, centerSlide }) => {
-    console.log(product)
-    const dispatch = useDispatch()
+const AbsolutePart = ({ product, centerSlide, addItem }) => {
     const [selectedImage, setSelectedImage] = useState(null)
     const [selectedSize, setSelectedSize] = useState(null)
-    const onAddItem = ({ product, size }) => {
-        const item = DUMMY_ITEMS.find((item) => item.id === product.id)
-        dispatch(itemsActions.addItem({ product: item, size, quantity: 1 }))
-    }
+
 
     const handleSelectedImage = (index) => {
         setSelectedImage(index)
@@ -77,7 +69,7 @@ const AbsolutePart = ({ product, centerSlide }) => {
                                 transition={{ type: "spring", stiffness: 800, damping: 10 }}
                                 animate={selectedSize ? 'hover' : 'disabled'}
                                 disabled={!selectedSize}
-                                onClick={() => onAddItem({ product, size: selectedSize })}
+                                onClick={() => addItem({ product, size: selectedSize })}
                             >
                                 {selectedSize ? `Add ${selectedSize} To Bag` : 'Select Size'}
                             </motion.button>

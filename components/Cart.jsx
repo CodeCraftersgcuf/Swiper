@@ -8,7 +8,8 @@ import ExtraItems from './Cart-subcomponents/ExtraItems';
 import OrdersManagementBox from './Cart-subcomponents/OrdersManagementBox';
 import { itemsActions } from '@/store/cartItems';
 import { useSelector } from 'react-redux';
-// import CustomToast from './customToast';
+import toast, { Toaster } from 'react-hot-toast';
+import CustomToast from './CustomToast';
 
 
 const Cart = ({ isOpen }) => {
@@ -21,21 +22,29 @@ const Cart = ({ isOpen }) => {
             dispatch(modalActions.closeModal())
         }
     };
-    // if (stateMessage === 'itemAdded') {
-    //     toast(<CustomToast message="Item added to cart" smallText={'This item was added to your cart'} />, {
-    //         className: 'added-toast',
-    //         position: 'bottom-center',
-    //         autoClose: 3000,
-    //         hideProgressBar: false,
-    //         closeOnClick: true,
-    //         draggable: true,
-    //     })
-    //     // dispatch(itemsActions.resetMessage())
-    // }
+    const notify = ({ product, size, adding, removing }) => {
+        toast.custom((t) => (
+            <CustomToast
+                product={product}
+                size={size}
+                adding={adding}
+                removing={removing}
+            />
+        ), {
+            duration: 2000
+
+        }
+        )
+    };
     const handleRemoveItem = (item) => {
         dispatch(itemsActions.removeItem(item))
+        notify({ product: item.product, size: item.size, adding: false, removing: true })
     }
     const handleDecrement = (item) => {
+        if (item.quantity === 1) {
+            handleRemoveItem(item)
+            return
+        }
         dispatch(itemsActions.decrement(item))
     }
     const handleIncrement = (item) => {
@@ -44,7 +53,7 @@ const Cart = ({ isOpen }) => {
 
     const handleAddItem = ({ product, size }) => {
         dispatch(itemsActions.addItem({ product, size, quantity: 1 }))
-
+        notify({ product, size, adding: true, removing: false })
     };
 
     return (
@@ -66,6 +75,7 @@ const Cart = ({ isOpen }) => {
                     onIncrement={handleIncrement}
                 />
             </div>
+            <Toaster position='bottom-center' />
         </motion.div>
     )
 }
