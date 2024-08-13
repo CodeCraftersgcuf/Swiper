@@ -1,9 +1,10 @@
 'use client';
 // import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+
 // import { useGSAP } from '@gsap/react';
 import './styles/main.scss';
 import { useRouter } from 'next/navigation';
-import { FaPlus } from 'react-icons/fa6';
+import { FaPlus, FaMinus } from 'react-icons/fa6';
 import React, { useRef, useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -25,6 +26,7 @@ import hero from '../assets/hero.jpg';
 import Image from 'next/image';
 import toast, { Toaster } from 'react-hot-toast';
 import CustomToast from '@/components/CustomToast';
+import HomeProductSlide from '@/components/HomeProductSlide';
 
 const slides = Array.from({ length: 40 }, (_, index) => index + 1);
 const buttonSizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'];
@@ -55,12 +57,12 @@ const HomePage = () => {
     //first add slide data with every mapping product and then fetch it from here
     return router.push('/product-details?id=' + product.id);
   };
-  const notify = ({ product, size, adding, removing }) => {
+  const notify = ({ product, quantity, adding, removing }) => {
     toast.custom(
       (t) => (
         <CustomToast
           product={product}
-          size={size}
+          quantity={quantity}
           adding={adding}
           removing={removing}
         />
@@ -70,9 +72,9 @@ const HomePage = () => {
       }
     );
   };
-  const onAddItem = ({ product, size }) => {
-    dispatch(itemsActions.addItem({ product, size, quantity: 1 }));
-    notify({ product, size, adding: true, removing: false });
+  const onAddItem = ({ product, quantity = 1 }) => {
+    dispatch(itemsActions.addItem({ product, quantity }));
+    notify({ product, quantity, adding: true, removing: false });
   };
 
   const handleMouseEnter = (index) => {
@@ -185,6 +187,7 @@ const HomePage = () => {
 
           <Swiper
             freeMode={true}
+            direction="horizontal"
             modules={[FreeMode]}
             className="mySwiper test ms-[30px]"
             onBeforeInit={(swiper) => {
@@ -230,7 +233,7 @@ const HomePage = () => {
                     //       index === 0 ? { paddingLeft: "50px", zIndex: '100' } : {}
                     //     }
                   >
-                    <div className="slider-item">
+                    {/* <div className="slider-item">
                       <div className="item-image-box">
                         <Swiper
                           className="imageSwiper"
@@ -270,19 +273,30 @@ const HomePage = () => {
                         <div className="item-sizes-box">
                           <div>
                             <p>QUICK ADD</p>
-                            <FaPlus className="plus" />
+                            <FaPlus
+                              className="plus"
+                              // onClick={() =>
+                              //   onAddItem({ product: item, quantity })
+                              // }
+                            />
                           </div>
                           <div className="separator"></div>
                           <div className="item-sizes">
-                            {buttonSizes.map((size, index) => (
-                              <p
-                                onClick={() =>
-                                  onAddItem({ product: item, size })
-                                }
-                              >
-                                {size}
-                              </p>
-                            ))}
+                            <p
+                            // onClick={() =>
+                            //   onIncrement(() => setQuantity(quantity - 1))
+                            // }
+                            >
+                              <FaPlus />
+                            </p>
+                            <div>{'2'}</div>
+                            <p
+                            // onClick={() =>
+                            //   onDecrement(() => setQuantity(quantity - 1))
+                            // }
+                            >
+                              <FaMinus />
+                            </p>
                           </div>
                         </div>
                         <div className="item-images">
@@ -291,6 +305,14 @@ const HomePage = () => {
                           ))}
                         </div>
                       </div>
+                    </div> */}
+                    <div className="slider-item">
+                      <HomeProductSlide
+                        key={index}
+                        product={item}
+                        onAddItem={onAddItem}
+                        handleNavigateDetails={hanldeNavigateDetails}
+                      />
                     </div>
                   </div>
                 </SwiperSlide>
