@@ -127,18 +127,18 @@ h1 {
   }
 }
 .sliders {
-  > div {
-    &:first-of-type {
+  > div.slider-buttons {
+    // &:first-of-type {
       border: 1px solid rgb(114, 114, 114);
       border-radius: 15px;
-      // width: 217px;
-      // width: 135px;
+    //   // width: 217px;
+    //   // width: 135px;
       width: fit-content;
       margin-top: 10px;
       padding: 3px;
       display: flex;
       justify-content: space-between;
-    }
+    // }
     > span {
       display: inline-block;
       color: rgb(248, 248, 248);
