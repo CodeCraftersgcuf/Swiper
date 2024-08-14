@@ -66,13 +66,15 @@ header {
   position: sticky;
   top: 0;
   z-index: 60;
-  background-color: #02020200;
+  // background-color: #02020200;
+  background-color: transparent;
+  
 
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px;
+    padding: 0 8px;
     margin-left: 15px;
     h3 {
       font-size: 18px;
@@ -83,12 +85,19 @@ header {
     div {
       display: flex;
       flex-direction: row;
+      align-items: center;
       margin-right: 0.4%;
-
+      height: 50px;
+      
       p {
         color: #f2f2f2;
         line-height: 12px;
       }
+      div.dropdown-trigger{
+        color: #f2f2f2;
+        line-height: 12px;
+        
+        }
       svg {
         font-size: 40px;
         margin: 0 0px;
@@ -98,14 +107,75 @@ header {
         border-radius: 15px;
         &:hover {
           background-color: rgba($color: #9e9e9e, $alpha: 0.5);
+          
         }
       }
       .burger {
         display: none;
       }
     }
+    &:hover {
+      background-color: rgba(2, 2, 2, 1);
+    }
   }
 }
+
+        .dropdown-container {
+          display: flex;
+          background-color: rgba(2, 2, 2, 1);
+          width: 100vw; /* Full screen width */
+          height: 60vh; /* Full screen height if needed */
+          // border: 1px solid #f2f2f2;
+          // box-sizing: border-box; 
+        }
+        
+        .left, .right {
+          display: flex;
+          flex: 1; /* Each child covers equal space */
+        }
+        
+        .left {
+          background-color: rgba(2, 2, 2, 1);
+          .grid {
+            font-weight: 200;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            padding: 30px 30px 30px 55px;
+            .row {
+              display: flex;
+              flex-grow: inherit;
+              flex: 1;
+              row-gap: 15px;
+              flex-direction: column;
+              p {
+                color: #f2f2f2;
+                line-height: 12px;
+              }
+              p.first {
+               padding-bottom: 5px
+              }
+            }
+          }
+        }
+        
+        .right {
+          background-color: rgba(2, 2, 2, 1);
+          .image-container {
+            display: flex;
+            justify-content: space-between; /* Space between images */
+            height: 100%;
+            width: 33%;
+            img {
+              width: 100%;
+              height: auto;
+              // aspect-ratio: 2 / 1;
+              border: 1px solid #000; /* Border around images */
+              box-sizing: border-box; /* Ensure border is included in width/height */
+            }
+          }
+        }
+        
 .preheader {
   width: 100%;
   padding: 10px 0 5px 0;

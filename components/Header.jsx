@@ -12,25 +12,19 @@ import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { modalActions } from "@/store/openModel";
 import { itemsActions } from "@/store/cartItems";
+import Image from "next/image";
+import pang3a from '@assets/Pang3aBlack.png'
 
+
+const items = Array.from({ length: 5 }, (_, index) => index + 1);
 const Header = () => {
   const dispatch = useDispatch();
   const addedItems = useSelector((state) => state.itemsFn.items);
   // const stateMessage = useSelector((state) => state.itemsFn.message);
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
-  // if (stateMessage === "itemAdded") {
-  //   toast.success("Item added to cart", {
-  //     className: "added-toast",
-  //     position: "bottom-center",
-  //     autoClose: 3000,
-  //     hideProgressBar: false,
-  //     closeOnClick: true,
-  //     draggable: true,
-  //   });
-  //   dispatch(itemsActions.resetMessage());
-  // }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,7 +44,8 @@ const Header = () => {
   return (
     <>
       <header
-        className={`header-nav ${isScrolled ? "scrolled" : "transparent"}`}
+        // className={`header-nav ${isScrolled ? "scrolled" : "transparent"}`}
+        className={`header-nav ${"transparent"}`}
       >
         {!isScrolled && (
           <div className="preheader z-20">
@@ -74,28 +69,30 @@ const Header = () => {
         )}
         <div className="separator"></div>
         <div className="header">
-          <div className=" gap-5">
+          <div className="flex h-full items-center gap-5">
             <h3
               className="hover:cursor-pointer text-[14px]"
               onClick={() => (window.location.href = "/")}
             >
-              ALPHALETE
+              <Image src={pang3a} alt="Logo Here" className="w-[150px] h-[22px] object-contain" />
             </h3>
-            <div className="example05 flex items-center mt-1">
-              <p
+            <div className="example05 flex items-center">
+              <div
                 style={{ cursor: "pointer" }}
-                onClick={() => (window.location.href = "/")}
-                className="text-[11px] text-gray-700 "
+                // onClick={() => (router.push(''))}
+                className=" dropdown-trigger text-[11px] text-gray-700 "
+                onMouseOver={() => setShowDropdown(true)}
+                onMouseOut={() => setShowDropdown(false)}
               >
-                WOMEN
-              </p>
-              <p
+                SHOP
+              </div>
+              {/* <p
                 style={{ padding: "0 10px", cursor: "pointer" }}
                 onClick={() => (window.location.href = "/")}
                 className="text-[11px] text-gray-700 "
               >
                 MEN
-              </p>
+              </p> */}
             </div>
           </div>
           <div className="relative">
@@ -107,7 +104,36 @@ const Header = () => {
             {/* <RxHamburgerMenu color="white" className="burger" /> */}
           </div>
         </div>
-      </header>
+        {showDropdown && <div
+          className="dropdown-container"
+          onMouseOver={() => setShowDropdown(true)}
+          onMouseOut={() => setShowDropdown(false)}
+        >
+          <div className="left">
+            <div className="grid">
+              {items.map((item, index) => (
+                <div key={index} className="row">
+                  <p className="first">Heading</p>
+                  <p>First</p>
+                  <p>Second</p>
+                  <p>Third</p>
+                  <p>Fourth</p>
+                  <p>Fifth</p>
+                </div>
+              ))}
+
+            </div>
+          </div>
+          <div className="right">
+            <div className="image-container">
+              <img src="https://alphalete.uk/cdn/shop/files/IceTankHeat2_2500x.jpg?v=1721064079" alt="Image 1" />
+              <img src="https://alphalete.uk/cdn/shop/files/IceTankHeat5_2500x.jpg?v=1721064079" alt="Image 2" />
+              <img src="https://alphalete.uk/cdn/shop/files/IceTankHeat5_2500x.jpg?v=1721064079" alt="Image 3" />
+            </div>
+          </div>
+        </div>}
+
+      </header >
     </>
   );
 };
