@@ -23,7 +23,7 @@ const Header = () => {
   // const stateMessage = useSelector((state) => state.itemsFn.message);
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(true);
 
 
   useEffect(() => {

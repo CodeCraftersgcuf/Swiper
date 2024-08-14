@@ -149,11 +149,19 @@ header {
               row-gap: 15px;
               flex-direction: column;
               p {
-                color: #f2f2f2;
                 line-height: 12px;
+                color: #f2f2f2c5;                
               }
               p.first {
-               padding-bottom: 5px
+                padding-bottom: 5px;
+                color: #f2f2f2;                
+              }
+              p:hover {
+                cursor: pointer;
+                color: #f2f2f2;   
+                transform: translateX(5px);      
+                transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+
               }
             }
           }
