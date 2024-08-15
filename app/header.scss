@@ -123,12 +123,48 @@ header {
         .dropdown-container {
           display: flex;
           background-color: rgba(2, 2, 2, 1);
-          width: 100vw; /* Full screen width */
-          height: 60vh; /* Full screen height if needed */
+          width: 100%; /* Full screen width */
+          height: 55%; /* Full screen height if needed */
           // border: 1px solid #f2f2f2;
           // box-sizing: border-box; 
         }
+        .header-links {
+          font-weight: 400 !important;
+          font-size: 12px;
+          display: block;
+          line-height: 24px;
+          text-decoration: none;
+          color: hsl(0deg 0% 96% / 80%);
+          position: relative;
+          max-width: fit-content;
+          padding-bottom: 5px;
+          &:hover {
+            cursor: pointer;
+          }
+          /* Ensure positioning context for ::after */
+        }
         
+        .header-links::after {
+          content: "";
+          /* Creates an empty pseudo-element */
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          /* Position the line at the bottom of the <a> tag */
+          width: 0;
+          /* Initial width is 0, so it's hidden */
+          height: 2px;
+          /* Thickness of the underline */
+          background-color: white;
+          /* Color of the underline */
+          transition: width 0.3s ease;
+          /* Animation duration and easing */
+        } 
+        .header-links:hover::after {
+          color: white;
+          margin-top: 20px;
+          width: 100%;
+        }  
         .left, .right {
           display: flex;
           flex: 1; /* Each child covers equal space */
@@ -156,13 +192,13 @@ header {
                 padding-bottom: 5px;
                 color: #f2f2f2;                
               }
-              p:hover {
-                cursor: pointer;
-                color: #f2f2f2;   
-                transform: translateX(5px);      
-                transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+              // p:hover {
+              //   cursor: pointer;
+              //   color: #f2f2f2;   
+              //   transform: translateX(5px);      
+              //   transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
 
-              }
+              // }
             }
           }
         }

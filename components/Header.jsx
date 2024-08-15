@@ -13,30 +13,66 @@ import { useSelector, useDispatch } from "react-redux";
 import { modalActions } from "@/store/openModel";
 import { itemsActions } from "@/store/cartItems";
 import Image from "next/image";
-import pang3a from '@assets/Pang3aBlack.png'
-
+import pang3a from "@assets/Pang3aBlack.png";
+import pang3aWhite from "../assets/pang3a.png";
+import _ from "lodash";
 
 const items = Array.from({ length: 5 }, (_, index) => index + 1);
+
 const Header = () => {
   const dispatch = useDispatch();
   const addedItems = useSelector((state) => state.itemsFn.items);
   // const stateMessage = useSelector((state) => state.itemsFn.message);
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(true);
-
+  const [showDropdown, setShowDropdown] = useState(false );
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
+    const addThreshold = 60; // Scroll position at or above which the class is added
+    const removeThreshold = 30; // Scroll position below which the class is removed
+    const buffer = 10; // Buffer to avoid rapid toggling
+    let lastScrollY = window.scrollY; // Ref to store the last scroll position
+  
+    const handleScroll = _.debounce(() => {
+      const scrollY = window.scrollY;
+  
+      // Add class when scroll position is at or above addThreshold, but only if transitioning from below it
+      if (scrollY >= addThreshold && lastScrollY < addThreshold) {
+        setIsScrolled(true);
+      } 
+      // Remove class when scroll position is below removeThreshold - buffer, but only if transitioning from above it
+      else if (scrollY <= removeThreshold - buffer && lastScrollY > removeThreshold - buffer) {
+        setIsScrolled(false);
+      }
+  
+      // Update last scroll position
+      lastScrollY = scrollY;
+    }, 200); // Debounce with a 200ms delay
+  
+    const checkInitialScroll = () => {
+      const scrollY = window.scrollY;
+  
+      // Add class if the initial scroll position is beyond addThreshold
+      if (scrollY >= addThreshold) {
+        setIsScrolled(true);
+      } else if (scrollY <= removeThreshold) {
+        setIsScrolled(false);
+      }
     };
-
+  
     window.addEventListener("scroll", handleScroll);
+  
+    // Initial check to handle cases where the initial scroll position is beyond addThreshold
+    checkInitialScroll();
+  
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
+  
+  
+  
+  
   const showCartModal = () => {
     dispatch(modalActions.openModal());
   };
@@ -44,18 +80,20 @@ const Header = () => {
   return (
     <>
       <header
-        // className={`header-nav ${isScrolled ? "scrolled" : "transparent"}`}
-        className={`header-nav ${"transparent"}`}
-      >
+        className={`header-nav z-50 ${isScrolled ? "scrolled" : "transparent"}`}
+        style={{ zIndex: 59 }} // Using a number instead of a string
+        >
         {!isScrolled && (
-          <div className="preheader z-20">
-            <div className="mySwiper">
-              <div className="swiper-wrapper">
-                <div className="swiper-slide">
-                  <p>Free Domestic Shipping over £120 and 30 Day Returns</p>
-                </div>
-              </div>
-            </div>
+          <div className="preheader hover:bg-black">
+            {/* <div className="mySwiper"> */}
+            {/* <div className="swiper-wrapper"> */}
+            {/* <div className="swiper-slide"> */}
+            <p className="text-white ps-7">
+              Free Domestic Shipping over $120 and 30 Day Returns
+            </p>
+            {/* </div> */}
+            {/* </div> */}
+            {/* </div> */}
 
             <div className="example05">
               <Link className="border-s-[1px] ms-1 border-gray-600" href="/">
@@ -70,12 +108,12 @@ const Header = () => {
         <div className="separator"></div>
         <div className="header">
           <div className="flex h-full items-center gap-5">
-            <h3
-              className="hover:cursor-pointer text-[14px]"
+            <Image
               onClick={() => (window.location.href = "/")}
-            >
-              <Image src={pang3a} alt="Logo Here" className="w-[150px] h-[22px] object-contain" />
-            </h3>
+              src={pang3aWhite}
+              alt="Logo Here"
+              className="h-[22px] object-contain w-auto"
+            />
             <div className="example05 flex items-center">
               <div
                 style={{ cursor: "pointer" }}
@@ -104,36 +142,45 @@ const Header = () => {
             {/* <RxHamburgerMenu color="white" className="burger" /> */}
           </div>
         </div>
-        {showDropdown && <div
-          className="dropdown-container"
-          onMouseOver={() => setShowDropdown(true)}
-          onMouseOut={() => setShowDropdown(false)}
-        >
-          <div className="left">
-            <div className="grid">
-              {items.map((item, index) => (
-                <div key={index} className="row">
-                  <p className="first">Heading</p>
-                  <p>First</p>
-                  <p>Second</p>
-                  <p>Third</p>
-                  <p>Fourth</p>
-                  <p>Fifth</p>
-                </div>
-              ))}
-
+        {showDropdown && (
+          <div
+            className="dropdown-container"
+            onMouseOver={() => setShowDropdown(true)}
+            onMouseOut={() => setShowDropdown(false)}
+          >
+            <div className="left">
+              <div className="grid">
+                {items.map((item, index) => (
+                  <div key={index} className="row">
+                    <p className="first">Heading</p>
+                    <p className="header-links">First</p>
+                    <p className="header-links">Second</p>
+                    <p className="header-links">Third</p>
+                    <p className="header-links">Fourth</p>
+                    <p className="header-links">Fifth</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="right">
+              <div className="image-container">
+                <img
+                  src="https://alphalete.uk/cdn/shop/files/IceTankHeat2_2500x.jpg?v=1721064079"
+                  alt="Image 1"
+                />
+                <img
+                  src="https://alphalete.uk/cdn/shop/files/IceTankHeat5_2500x.jpg?v=1721064079"
+                  alt="Image 2"
+                />
+                <img
+                  src="https://alphalete.uk/cdn/shop/files/IceTankHeat5_2500x.jpg?v=1721064079"
+                  alt="Image 3"
+                />
+              </div>
             </div>
           </div>
-          <div className="right">
-            <div className="image-container">
-              <img src="https://alphalete.uk/cdn/shop/files/IceTankHeat2_2500x.jpg?v=1721064079" alt="Image 1" />
-              <img src="https://alphalete.uk/cdn/shop/files/IceTankHeat5_2500x.jpg?v=1721064079" alt="Image 2" />
-              <img src="https://alphalete.uk/cdn/shop/files/IceTankHeat5_2500x.jpg?v=1721064079" alt="Image 3" />
-            </div>
-          </div>
-        </div>}
-
-      </header >
+        )}
+      </header>
     </>
   );
 };

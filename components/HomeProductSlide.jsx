@@ -50,7 +50,7 @@ const HomeProductSlide = ({ product, onAddItem, handleNavigateDetails }) => {
                 <p className="hide">
                     Gliese <span> 4 colors</span>
                 </p>
-                <p className="hide">{`£${product.price.toFixed(2)}`}</p>
+                <p className="hide">{`$${product.price.toFixed(2)}`}</p>
                 <div className="item-sizes-box">
                     <div>
                         <p>QUICK ADD</p>
